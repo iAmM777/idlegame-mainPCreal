@@ -15,7 +15,15 @@ public class Controller : MonoBehaviour
     [SerializeField] private TMP_Text BeansPowerClickText;
 
 
-    public BigDouble BeansPower() => 1 + gameData.clickUpgradeLevel;
+    public BigDouble BeansPower() 
+    {
+        BigDouble total = 0;
+        for (int i = 0; i < gameData.clickUpgradeLevel.Count; i++)
+        {
+            total += UpgradeManager.instance.clickUpgradeBasePower[i] * gameData.clickUpgradeLevel[i];
+        }
+        return total;
+    } 
     private void Start()
     {
         gameData = new gameData();
