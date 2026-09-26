@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\gameData.cs" />
     <Compile Include="Assets\Scripts\BigDouble.cs" />
+    <Compile Include="Assets\Scripts\Upgrades.cs" />
     <Compile Include="Assets\Scripts\BigDoubleEditor.cs" />
+    <Compile Include="Assets\Scripts\UpgradesManager.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
   </ItemGroup>
   <ItemGroup>

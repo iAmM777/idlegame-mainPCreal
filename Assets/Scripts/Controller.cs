@@ -1,26 +1,32 @@
 using UnityEngine;
 using TMPro;
 using Unity.Android.Gradle.Manifest;
+using BreakInfinity;
 //using UnityEngine.UI;
 //[System.Serializable]
 
 public class Controller : MonoBehaviour
 {
+    public UpgradeManager upgradeManager;
     public gameData gameData;
     [SerializeField] private TMP_Text BeanText;
+    [SerializeField] private TMP_Text BeansPowerClickText;
 
 
+    public BigDouble BeansPower() => 1 + gameData.clickUpgradeLevel;
     private void Start()
     {
         gameData = new gameData();
+        upgradeManager.StartUpgradeManager();
     }
     private void Update()
     {
-        BeanText.text = gameData.Beans + " Beans!";
+        BeanText.text = gameData.Beans.ToString("F0") + " Beans!";
+        BeansPowerClickText.text = "+" + BeansPower().ToString("F0") + " Beans";
     }
 
     public void AddBeans()
     {
-        gameData.Beans++;
+        gameData.Beans += BeansPower();
     }
 }

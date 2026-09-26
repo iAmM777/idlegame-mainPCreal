@@ -6,9 +6,11 @@ using BreakInfinity;
 public class gameData
 {
     public BigDouble Beans;
+    public BigDouble clickUpgradeLevel;
 
     public gameData()
     {
         Beans = 0;
+        clickUpgradeLevel = 0;
     }
 }
