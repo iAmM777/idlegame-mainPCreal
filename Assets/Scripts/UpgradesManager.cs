@@ -27,7 +27,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void StartUpgradeManager()
     {
-        Methods.UpgradeCheck(ref Controller.instance.gameData.clickUpgradeLevel, 4);
+        Methods.UpgradeCheck(Controller.instance.gameData.clickUpgradeLevel, 4);
 
         clickUpgradeNames = new [] { "Bean Power +1", "Bean Power +5", "Bean Power +10", "Bean Power +25" };
         clickUpgradeBaseCost = new BigDouble[] { 10, 50, 100, 250 };
