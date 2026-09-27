@@ -17,7 +17,7 @@ public class Controller : MonoBehaviour
 
     public BigDouble BeansPower() 
     {
-        BigDouble total = 0;
+        BigDouble total = 1;
         for (int i = 0; i < gameData.clickUpgradeLevel.Count; i++)
         {
             total += UpgradeManager.instance.clickUpgradeBasePower[i] * gameData.clickUpgradeLevel[i];
