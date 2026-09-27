@@ -14,25 +14,48 @@ public class UpgradeManager : MonoBehaviour
     public List<Upgrades> clickUpgrades;
     public Upgrades clickUpgradePrefab;
 
+
+    public List<Upgrades> productionUpgrades;
+    public Upgrades ProductionUpgradesPrefab;
+
     public ScrollRect clickUpgradesScroll;
     public Transform clickUpgradesPanel;
 
-    public string[] clickUpgradeNames;
+    public ScrollRect productionUpgradesScroll;
+    public Transform ProductionUpgradesPanel;
 
+    public string[] clickUpgradeNames;
+    public string[] productionUpgradeNames;
 
 
     public BigDouble[] clickUpgradeBaseCost;
     public BigDouble[] clickUpgradeCostMult;
     public BigDouble[] clickUpgradeBasePower;
 
+    public BigDouble[] productionUpgradeBaseCost;
+    public BigDouble[] productionUpgradeCostMult;
+    public BigDouble[] productionUpgradeBasePower;
+
+
+
     public void StartUpgradeManager()
     {
         Methods.UpgradeCheck(Controller.instance.gameData.clickUpgradeLevel, 4);
+        Methods.UpgradeCheck(Controller.instance.gameData.productionUpgradeLevel, 4);
 
+        // Upgrade Names
         clickUpgradeNames = new [] { "Bean Power +1", "Bean Power +5", "Bean Power +10", "Bean Power +25" };
+        productionUpgradeNames = new[] { "+1 Bean/s", "+2 Beans/s", "+5 Beans/s", "+10 Beans/s" };
+
+        // Click Upgrades
         clickUpgradeBaseCost = new BigDouble[] { 10, 50, 100, 250 };
         clickUpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55, 1.75 };
         clickUpgradeBasePower = new BigDouble[] { 1, 5, 10, 25 };
+
+        //production upgrades
+        productionUpgradeBaseCost = new BigDouble[] { 25, 50, 100, 250 };
+        productionUpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55, 1.75 };
+        productionUpgradeBasePower = new BigDouble[] { 1, 5, 10, 25 };
 
         for (int i = 0; i < Controller.instance.gameData.clickUpgradeLevel.Count; i++)
         {
@@ -40,37 +63,83 @@ public class UpgradeManager : MonoBehaviour
             upgrade.upgradeID = i;
             clickUpgrades.Add(upgrade);
         }
+
+        for (int i = 0; i < Controller.instance.gameData.productionUpgradeLevel.Count; i++)
+        {
+            Upgrades upgrade = Instantiate(ProductionUpgradesPrefab, ProductionUpgradesPanel);
+            upgrade.upgradeID = i;
+            productionUpgrades.Add(upgrade);
+        }
+
         clickUpgradesScroll.normalizedPosition = new Vector2(0, 0);
-        UpdateClickUpgradeUI();
+        productionUpgradesScroll.normalizedPosition = new Vector2(0, 0);
+
+        UpdateUpgradeUI("click");
+        UpdateUpgradeUI("production");
     }
 
-    public void UpdateClickUpgradeUI(int upgradeID = -1)
+    public void UpdateUpgradeUI(string type, int upgradeID = -1)
     {
         var data = Controller.instance.gameData;
 
-        if (upgradeID == -1)
-            for (int i = 0; i < clickUpgrades.Count; i++) UpdateUI(i);
-        else UpdateUI(upgradeID);
-
-
-        void UpdateUI(int ID)
+        switch (type)
         {
-            clickUpgrades[ID].LevelText.text = data.clickUpgradeLevel[ID].ToString();
-            clickUpgrades[ID].CostText.text = $"Cost:  {ClickUpgradeCost(ID).ToString("F0")}  Beans";
-            clickUpgrades[ID].NameText.text = clickUpgradeNames[ID];
+            case "click":
+                if (upgradeID == -1)
+                    for (int i = 0; i < clickUpgrades.Count; i++) UpdateUI(clickUpgrades, data.clickUpgradeLevel, clickUpgradeNames, i);
+                else UpdateUI(clickUpgrades, data.clickUpgradeLevel, clickUpgradeNames, upgradeID);
+                break;
+            case "production":
+                if (upgradeID == -1)
+                    for (int i = 0; i < productionUpgrades.Count; i++) UpdateUI(productionUpgrades, data.productionUpgradeLevel, productionUpgradeNames, i);
+                else UpdateUI(productionUpgrades, data.productionUpgradeLevel, productionUpgradeNames, upgradeID);
+                break;
+        }
+
+        void UpdateUI(List<Upgrades> upgrades, List<int> upgradeLevels, string[] upgradeNames, int ID)
+        {
+            upgrades[ID].LevelText.text = upgradeLevels[ID].ToString();
+            upgrades[ID].CostText.text = $"Cost:  {UpgradeCost(type, ID):F2}  Beans";
+            upgrades[ID].NameText.text = upgradeNames[ID];
         }
     }
-    public BigDouble ClickUpgradeCost(int UpgradeID) => clickUpgradeBaseCost[UpgradeID] * BigDouble.Pow(clickUpgradeCostMult[UpgradeID], Controller.instance.gameData.clickUpgradeLevel[UpgradeID]);
-
-    public void BuyUpgrade(int UpgradeID)
+    public BigDouble UpgradeCost(string type, int UpgradeID)
     {
         var data = Controller.instance.gameData;
-        if (data.Beans >= ClickUpgradeCost(UpgradeID))
+        switch (type) 
+        { 
+            case "click":
+                return clickUpgradeBaseCost[UpgradeID] * BigDouble.Pow(clickUpgradeCostMult[UpgradeID], data.clickUpgradeLevel[UpgradeID]);
+
+            case "production":
+                return productionUpgradeBaseCost[UpgradeID] * BigDouble.Pow(productionUpgradeCostMult[UpgradeID], data.productionUpgradeLevel[UpgradeID]);
+        }
+        return 0;
+    }
+
+    public void BuyUpgrade(string type, int UpgradeID)
+    {
+        var data = Controller.instance.gameData;
+
+        switch (type)
         {
-            data.Beans -= ClickUpgradeCost(UpgradeID);
-            data.clickUpgradeLevel[UpgradeID]++;
+            case "click":
+                Buy(data.clickUpgradeLevel);
+                break;
+            case "production":
+                Buy(data.productionUpgradeLevel);
+                break;
         }
 
-        UpdateClickUpgradeUI(UpgradeID);
+        void Buy(List<int> upgradeLevels)
+        {
+            if (data.Beans >= UpgradeCost(type, UpgradeID))
+            {
+                data.Beans -= UpgradeCost(type, UpgradeID);
+                upgradeLevels[UpgradeID]++;
+            }
+
+            UpdateUpgradeUI("click", UpgradeID);
+        }
     }
 }

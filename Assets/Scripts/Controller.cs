@@ -12,6 +12,7 @@ public class Controller : MonoBehaviour
 
     public gameData gameData;
     [SerializeField] private TMP_Text BeanText;
+    [SerializeField] private TMP_Text BeansPerSecondText;
     [SerializeField] private TMP_Text BeansPowerClickText;
 
 
@@ -23,7 +24,18 @@ public class Controller : MonoBehaviour
             total += UpgradeManager.instance.clickUpgradeBasePower[i] * gameData.clickUpgradeLevel[i];
         }
         return total;
-    } 
+    }
+
+    public BigDouble BeansPerSecond() 
+    {
+        BigDouble total = 0;
+        for (int i = 0; i < gameData.productionUpgradeLevel.Count; i++)
+        {
+            total += UpgradeManager.instance.productionUpgradeBasePower[i] * gameData.productionUpgradeLevel[i];
+        }
+        return total;
+    }
+
     private void Start()
     {
         gameData = new gameData();
@@ -33,6 +45,9 @@ public class Controller : MonoBehaviour
     {
         BeanText.text = gameData.Beans.ToString("F0") + " Beans!";
         BeansPowerClickText.text = "+" + BeansPower().ToString("F0") + " Beans";
+
+        BeansPerSecondText.text = $"{BeansPerSecond():F2} Beans/s";
+        gameData.Beans += BeansPerSecond() * Time.deltaTime;
     }
 
     public void AddBeans()
