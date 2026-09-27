@@ -11,6 +11,6 @@ public class gameData
     public gameData()
     {
         Beans = 0;
-        clickUpgradeLevel = Methods.CreateList<BigDouble>(3);
+        clickUpgradeLevel = Methods.CreateList<BigDouble>(4);
     }
 }

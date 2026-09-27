@@ -27,10 +27,12 @@ public class UpgradeManager : MonoBehaviour
 
     public void StartUpgradeManager()
     {
-        clickUpgradeNames = new [] { "Bean Power +1", "Bean Power +5", "Bean Power +10" };
-        clickUpgradeBaseCost = new BigDouble[] { 10, 50, 100 };
-        clickUpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55 };
-        clickUpgradeBasePower = new BigDouble[] { 1, 5, 10 };
+        Methods.UpgradeCheck(ref Controller.instance.gameData.clickUpgradeLevel, 4);
+
+        clickUpgradeNames = new [] { "Bean Power +1", "Bean Power +5", "Bean Power +10", "Bean Power +25" };
+        clickUpgradeBaseCost = new BigDouble[] { 10, 50, 100, 250 };
+        clickUpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55, 1.75 };
+        clickUpgradeBasePower = new BigDouble[] { 1, 5, 10, 25 };
 
         for (int i = 0; i < Controller.instance.gameData.clickUpgradeLevel.Count; i++)
         {
@@ -40,7 +42,6 @@ public class UpgradeManager : MonoBehaviour
         }
         clickUpgradesScroll.normalizedPosition = new Vector2(0, 0);
         UpdateClickUpgradeUI();
-
     }
 
     public void UpdateClickUpgradeUI(int upgradeID = -1)
