@@ -7,13 +7,17 @@ using BreakInfinity;
 public class gameData
 {
     public BigDouble Beans;
-    public List<int> clickUpgradeLevel;
-    public List<int> productionUpgradeLevel;
 
-    public gameData()
+    public List<int> clickUpgradeLevel;
+    public List<BigDouble> productionUpgradeLevel;
+    public List<BigDouble> generatorUpgradeLevel;
+
+
+    public gameData() 
     {
         Beans = 0;
         clickUpgradeLevel = new int[4].ToList();
-        productionUpgradeLevel = new int[4].ToList();
+        productionUpgradeLevel = new BigDouble[4].ToList();
+        generatorUpgradeLevel = new BigDouble[4].ToList();
     } 
 }
