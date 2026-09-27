@@ -139,7 +139,7 @@ public class UpgradeManager : MonoBehaviour
                 upgradeLevels[UpgradeID]++;
             }
 
-            UpdateUpgradeUI("click", UpgradeID);
+            UpdateUpgradeUI(type, UpgradeID);
         }
     }
 }
