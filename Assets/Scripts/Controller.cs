@@ -21,7 +21,7 @@ public class Controller : MonoBehaviour
         BigDouble total = 1;
         for (int i = 0; i < gameData.clickUpgradeLevel.Count; i++)
         {
-            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[i] * gameData.clickUpgradeLevel[i];
+            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[0] * gameData.clickUpgradeLevel[0];
         }
         return total;
     }
