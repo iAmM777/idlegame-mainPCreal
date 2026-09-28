@@ -42,11 +42,17 @@ public class Controller : MonoBehaviour
         return UpgradeManager.instance.upgradeHandlers[2].UpgradeBasePower[index] * gameData.generatorUpgradeLevel[index];
     }
 
+    private const string SaveFileName = "PlayerData_Tutorial";
     private void Start()
     {
-        gameData = new gameData();
+        gameData = SaveSystem.SaveExists(SaveFileName)
+            ? SaveSystem.LoadData<gameData>(SaveFileName)
+            : new gameData();       
+        
         UpgradeManager.instance.StartUpgradeManager();
     }
+
+    public float SaveTime;
     private void Update()
     {
         BeanText.text = gameData.Beans.ToString("F0") + " Beans!";
@@ -58,6 +64,13 @@ public class Controller : MonoBehaviour
         for (var i = 0; i < gameData.generatorUpgradeLevel.Count; i++)
         {
             gameData.productionUpgradeGenerated[i] += UpgradesPerSecond(i) * Time.deltaTime;
+        }
+
+        SaveTime += Time.deltaTime * (1 / Time.timeScale);
+        if (SaveTime >= 15)
+        {
+            SaveSystem.SaveData(gameData, SaveFileName);
+            SaveTime = 0;
         }
     }
 

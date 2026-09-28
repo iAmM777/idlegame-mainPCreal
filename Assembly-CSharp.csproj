@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Methods.cs" />
+    <Compile Include="Assets\Scripts\SaveSystem.cs" />
     <Compile Include="Assets\Scripts\BigDoubleEditor.cs" />
     <Compile Include="Assets\Scripts\UpgradesManager.cs" />
     <Compile Include="Assets\Scripts\UpgradeHandler.cs" />
