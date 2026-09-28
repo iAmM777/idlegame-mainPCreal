@@ -20,7 +20,7 @@ public class UpgradeManager : MonoBehaviour
         Methods.UpgradeCheck(Controller.instance.gameData.productionUpgradeLevel, 4);
         Methods.UpgradeCheck(Controller.instance.gameData.generatorUpgradeLevel, 4);
 
-        upgradeHandlers = new UpgradeHandler[3];
+        
 
 
 

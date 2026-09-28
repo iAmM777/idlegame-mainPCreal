@@ -20,19 +20,16 @@ public class Controller : MonoBehaviour
     {
         BigDouble total = 1;
         for (int i = 0; i < gameData.clickUpgradeLevel.Count; i++)
-        {
-            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[0] * gameData.clickUpgradeLevel[0];
-        }
+            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[i] * gameData.clickUpgradeLevel[0];
         return total;
+       
     }
 
     public BigDouble BeansPerSecond() 
     {
         BigDouble total = 0;
         for (int i = 0; i < gameData.productionUpgradeLevel.Count; i++)
-        {
             total += UpgradeManager.instance.upgradeHandlers[1].UpgradeBasePower[i] * gameData.productionUpgradeLevel[i];
-        }
         return total;
     }
 
