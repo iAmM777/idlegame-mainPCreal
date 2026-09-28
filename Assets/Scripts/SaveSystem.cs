@@ -5,9 +5,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 using File = UnityEngine.Windows.File;
+using TMPro;
+using UnityEngine.UI;
+using System.Reflection.PortableExecutable;
 public class SaveSystem : MonoBehaviour
 {
+    public TMP_InputField ImportField;
+    public TMP_InputField ExportField;
+
+    public Image CopyButton;
+    public Image Pastebutton;
+
+    public TMP_Text CopyButtonText;
+    public TMP_Text PasteButtonText;
+
+
     private const string FileType = ".txt";
+    private const string FilePath = "PlayerData_Tutorial";
     private static string SavePath => Application.persistentDataPath + "/Saves/";
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
 
@@ -34,7 +48,7 @@ public class SaveSystem : MonoBehaviour
             }
         }
     }
-    public static T LoadData<T>(string fileName) 
+    public static T LoadData<T>(string fileName)
     {
         Directory.CreateDirectory(SavePath);
         Directory.CreateDirectory(BackUpSavePath);
@@ -45,7 +59,7 @@ public class SaveSystem : MonoBehaviour
 
         Load(SavePath);
         if (backUpNeeded) Load(BackUpSavePath);
-            
+
         return dataToReturn;
 
         void Load(string path)
@@ -69,8 +83,6 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
-
-
     public static bool SaveExists(string fileName)
     {
         if (File.Exists(SavePath + fileName + FileType))
@@ -79,5 +91,66 @@ public class SaveSystem : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+
+    public void Import()
+    { 
+        Directory.CreateDirectory(SavePath);
+
+        using (StreamWriter writer = new StreamWriter($"{SavePath}{FilePath}{FileType}"))
+        {
+            writer.WriteLine(ImportField.text);
+            writer.Close();
+        }
+
+        Controller.instance.gameData = SaveExists(FilePath)
+            ? LoadData<gameData>(FilePath)
+            : new gameData();
+    }
+
+    public void Export()
+    {
+        Controller.instance.Save();
+        Directory.CreateDirectory(SavePath);
+
+        using (StreamReader reader = new StreamReader($"{SavePath}{FilePath}{FileType}"))
+        {
+            ExportField.text = reader.ReadToEnd();
+            reader.Close();
+        }
+    }
+    public void Copy() 
+    {
+        if (ExportField.text == "") return;
+        GUIUtility.systemCopyBuffer = ExportField.text;
+        CopyButton.color = Color.green;
+        CopyButtonText.text = "Copied!";
+        StartCoroutine(CopyPasteButtonsNormal());
+    }
+    public void Paste()
+    {
+        ImportField.text = GUIUtility.systemCopyBuffer;
+        PasteButtonText.color = Color.green;
+        PasteButtonText.text = "Pasted!";
+        StartCoroutine(CopyPasteButtonsNormal());
+    }
+    public void Clear(string type)
+    {
+        if (type == "Export")
+        {
+            ExportField.text = "";
+            return;
+        }
+        ImportField.text = "";
+    }
+
+    public IEnumerator CopyPasteButtonsNormal()
+    {
+        yield return new WaitForSeconds(2f);
+        CopyButton.color = Color.white; //subject to change
+        CopyButtonText.text = "Copy to Clipboard";
+        if (Pastebutton != null) Pastebutton.color = Color.white; //subject to change       
+        PasteButtonText.text = "Paste Clipboard";
     }
 }

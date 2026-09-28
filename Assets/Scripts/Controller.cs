@@ -43,7 +43,7 @@ public class Controller : MonoBehaviour
     }
 
     private const string SaveFileName = "PlayerData_Tutorial";
-    private void Start()
+    public void Start()
     {
         gameData = SaveSystem.SaveExists(SaveFileName)
             ? SaveSystem.LoadData<gameData>(SaveFileName)
@@ -69,9 +69,13 @@ public class Controller : MonoBehaviour
         SaveTime += Time.deltaTime * (1 / Time.timeScale);
         if (SaveTime >= 15)
         {
-            SaveSystem.SaveData(gameData, SaveFileName);
+            Save();
             SaveTime = 0;
         }
+    }
+    public void Save() 
+    {
+        SaveSystem.SaveData(gameData, SaveFileName);
     }
 
     public void AddBeans()
