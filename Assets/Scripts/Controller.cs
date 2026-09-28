@@ -19,8 +19,9 @@ public class Controller : MonoBehaviour
     public BigDouble BeansPower() 
     {
         BigDouble total = 1;
+        if (UpgradeManager.instance?.upgradeHandlers?[0]?.UpgradeBasePower == null) return total;
         for (int i = 0; i < gameData.clickUpgradeLevel.Count; i++)
-            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[i] * gameData.clickUpgradeLevel[0];
+            total += UpgradeManager.instance.upgradeHandlers[0].UpgradeBasePower[i] * gameData.clickUpgradeLevel[i];
         return total;
        
     }
@@ -28,13 +29,16 @@ public class Controller : MonoBehaviour
     public BigDouble BeansPerSecond() 
     {
         BigDouble total = 0;
+        if (UpgradeManager.instance?.upgradeHandlers?[1]?.UpgradeBasePower == null) return total;
         for (int i = 0; i < gameData.productionUpgradeLevel.Count; i++)
-            total += UpgradeManager.instance.upgradeHandlers[1].UpgradeBasePower[i] * gameData.productionUpgradeLevel[i];
+            total += UpgradeManager.instance.upgradeHandlers[1].UpgradeBasePower[i] 
+                * (gameData.productionUpgradeLevel[i] + gameData.productionUpgradeGenerated[i]);
         return total;
     }
 
     public BigDouble UpgradesPerSecond(int index)
     { 
+        if (UpgradeManager.instance?.upgradeHandlers?[2]?.UpgradeBasePower == null) return 0;
         return UpgradeManager.instance.upgradeHandlers[2].UpgradeBasePower[index] * gameData.generatorUpgradeLevel[index];
     }
 
@@ -53,7 +57,7 @@ public class Controller : MonoBehaviour
 
         for (var i = 0; i < gameData.generatorUpgradeLevel.Count; i++)
         {
-            gameData.productionUpgradeLevel[i] += UpgradesPerSecond(i) * Time.deltaTime;
+            gameData.productionUpgradeGenerated[i] += UpgradesPerSecond(i) * Time.deltaTime;
         }
     }
 

@@ -18,10 +18,21 @@ public class UpgradeManager : MonoBehaviour
     {
         Methods.UpgradeCheck(Controller.instance.gameData.clickUpgradeLevel, 4);
         Methods.UpgradeCheck(Controller.instance.gameData.productionUpgradeLevel, 4);
+        Methods.UpgradeCheck(Controller.instance.gameData.productionUpgradeGenerated, 4);
         Methods.UpgradeCheck(Controller.instance.gameData.generatorUpgradeLevel, 4);
 
         
-
+        // upgradeHandlers is filled in from the Inspector: add an UpgradeHandler component to each
+        // upgrade panel (ClickUpgradesPanel, ProductionUpgradesPanel, GeneratorUpgradesPanel) and drag
+        // all three into this array, in the order click / production / generator.
+        if (upgradeHandlers == null || upgradeHandlers.Length < 3
+            || upgradeHandlers[0] == null || upgradeHandlers[1] == null || upgradeHandlers[2] == null)
+        {
+            Debug.LogError("UpgradeManager: 'upgradeHandlers' has no UpgradeHandler components assigned. " +
+                "Add an UpgradeHandler component to each upgrade panel and drag all three into this array.");
+            enabled = false;
+            return;
+        }
 
 
         // Upgrade Names
@@ -36,10 +47,10 @@ public class UpgradeManager : MonoBehaviour
         };
 
         // Click Upgrades
-        upgradeHandlers[0].UpgradeBaseCost = new BigDouble[] { 10, 50, 100, 250 };
+        upgradeHandlers[0].UpgradeBaseCost = new BigDouble[] { 10, 50, 100, 0 };
         upgradeHandlers[0].UpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55, 1.75 };
         upgradeHandlers[0].UpgradeBasePower = new BigDouble[] { 1, 5, 10, 25 };
-        upgradeHandlers[0].UpgradesUnlock = new BigDouble[] { 0, 25, 50, 125 }; //half of clickUpgradeBaseCost
+        upgradeHandlers[0].UpgradesUnlock = new BigDouble[] { 0, 25, 50, 0 }; //half of clickUpgradeBaseCost
 
         //production upgrades
         upgradeHandlers[1].UpgradeBaseCost = new BigDouble[] { 25, 50, 100, 250 };
@@ -70,7 +81,7 @@ public class UpgradeManager : MonoBehaviour
         }
         UpdateUpgradeUI("click");
         UpdateUpgradeUI("production");
-        UpdateUpgradeUI("generator");
+        UpdateUpgradeUI("generators");
     }
 
 
@@ -89,6 +100,10 @@ public class UpgradeManager : MonoBehaviour
                     upgradeHandlers[index].Upgrades[i].gameObject.SetActive(currency >= unlock[i]);
             }
         }
+        if (upgradeHandlers[1].UpgradesScroll.gameObject.activeSelf)
+        {
+            UpdateUpgradeUI("production");
+        }
     }
     public void UpdateUpgradeUI(string type, int upgradeID = -1)
     {
@@ -97,30 +112,47 @@ public class UpgradeManager : MonoBehaviour
         switch (type)
         {
             case "click":
-                if (upgradeID == -1)
-                    UpdateAllUI(upgradeHandlers[0].Upgrades, data.clickUpgradeLevel, upgradeHandlers[0].UpgradeNames, 0);
+                UpdateAllUI(upgradeHandlers[0].Upgrades, data.clickUpgradeLevel, upgradeHandlers[0].UpgradeNames, 0, upgradeID, type);
                 break;
             case "production":
-                UpdateAllUI(upgradeHandlers[1].Upgrades, data.productionUpgradeLevel, upgradeHandlers[1].UpgradeNames, 1);
+                UpdateAllUI(upgradeHandlers[1].Upgrades, data.productionUpgradeLevel, upgradeHandlers[1].UpgradeNames, 1, upgradeID, type, data.productionUpgradeGenerated);
                 break;
             case "generators":
-                UpdateAllUI(upgradeHandlers[2].Upgrades, data.generatorUpgradeLevel, upgradeHandlers[2].UpgradeNames, 2);
+                UpdateAllUI(upgradeHandlers[2].Upgrades, data.generatorUpgradeLevel, upgradeHandlers[2].UpgradeNames, 2, upgradeID, type);
                 break;
         }
+    }
 
-        void UpdateAllUI<T>(List<Upgrades> upgrades, List<T> upgradeLevels, string[] upgradeNames, int index)
+
+
+    private void UpdateAllUI(List<Upgrades> upgrades, List<int> upgradeLevels, string[] upgradeNames, int index, int upgradeID, string type)
+    {
+        if (upgradeID == -1)
+            for (int i = 0; i < upgradeHandlers[index].Upgrades.Count; i++)
+                UpdateUI(i);
+        else UpdateUI(upgradeID);
+
+        void UpdateUI(int ID)
         {
-            if (upgradeID == -1)
-                for (int i = 0; i < upgradeHandlers[index].Upgrades.Count; i++) 
-                    UpdateUI(i);
-            else UpdateUI(upgradeID);
+            upgrades[ID].LevelText.text = upgradeLevels[ID].ToString("F0");
+            upgrades[ID].CostText.text = $"Cost:  {UpgradeCost(type, ID):F2}  Beans";
+            upgrades[ID].NameText.text = upgradeNames[ID];
+        }
+    }
+    private void UpdateAllUI(List<Upgrades> upgrades, List< BigDouble> upgradeLevels,  string[] upgradeNames, int index, int upgradeID, string type, List<BigDouble> upgradeGenerated = null)
+    {
+        if (upgradeID == -1)
+            for (int i = 0; i < upgradeHandlers[index].Upgrades.Count; i++)
+                UpdateUI(i);
+        else UpdateUI(upgradeID);
 
-            void UpdateUI(int ID) 
-            {
-                upgrades[ID].LevelText.text = upgradeLevels[ID].ToString();
-                upgrades[ID].CostText.text = $"Cost:  {UpgradeCost(type, ID):F2}  Beans";
-                upgrades[ID].NameText.text = upgradeNames[ID];
-            }
+        void UpdateUI(int ID)
+        {
+            BigDouble generated = upgradeGenerated == null ? 0 : upgradeGenerated[ID];
+
+            upgrades[ID].LevelText.text = (upgradeLevels[ID] + generated).ToString("F2");
+            upgrades[ID].CostText.text = $"Cost:  {UpgradeCost(type, ID):F2}  Beans";
+            upgrades[ID].NameText.text = upgradeNames[ID];
         }
     }
     public BigDouble UpgradeCost(string type, int UpgradeID)
@@ -133,7 +165,7 @@ public class UpgradeManager : MonoBehaviour
             case "production":
                 return UpgradeCost_BigDouble(1, data.productionUpgradeLevel, UpgradeID);
             case "generators":
-                return UpgradeCost_BigDouble(2, data.generatorUpgradeLevel, UpgradeID);
+                return UpgradeCost_int(2, data.generatorUpgradeLevel, UpgradeID);
         }
         return 0;
     }
@@ -141,13 +173,13 @@ public class UpgradeManager : MonoBehaviour
     {
         return upgradeHandlers[index].UpgradeBaseCost[UpgradeID] 
                 * BigDouble.Pow(upgradeHandlers[index].UpgradeCostMult[UpgradeID], 
-                    (BigDouble)Controller.instance.gameData.clickUpgradeLevel[UpgradeID]);
+                    levels[UpgradeID]);
     }
     private BigDouble UpgradeCost_int(int index, List<int> levels, int UpgradeID)
     {
         return upgradeHandlers[index].UpgradeBaseCost[UpgradeID]
                 * BigDouble.Pow(upgradeHandlers[index].UpgradeCostMult[UpgradeID],
-                    (BigDouble)Controller.instance.gameData.clickUpgradeLevel[UpgradeID]);
+                    (BigDouble)levels[UpgradeID]);
     }
     
 

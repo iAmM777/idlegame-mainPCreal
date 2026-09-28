@@ -13,5 +13,5 @@ public class Upgrades : MonoBehaviour
 
     public void BuyClickUpgrade() => UpgradeManager.instance.BuyUpgrade("click", upgradeID);
     public void BuyProductionUpgrade() => UpgradeManager.instance.BuyUpgrade("production", upgradeID);
-    public void BuyGeneratorUpgrade() => UpgradeManager.instance.BuyUpgrade("generator", upgradeID);
+    public void BuyGeneratorUpgrade() => UpgradeManager.instance.BuyUpgrade("generators", upgradeID);
 }

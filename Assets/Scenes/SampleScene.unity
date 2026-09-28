@@ -119,6 +119,59 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &135009897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135009898}
+  - component: {fileID: 135009899}
+  m_Layer: 0
+  m_Name: ClickUpgradeHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &135009898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135009897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364152175}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &135009899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135009897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 2214023167589727736, guid: 4c49dc0d0cf179044b028683167bc6f2, type: 3}
+  UpgradesScroll: {fileID: 420080827}
+  UpgradesPanel: {fileID: 2114596597}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1 &196054016
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +534,7 @@ GameObject:
   - component: {fileID: 344539056}
   - component: {fileID: 344539058}
   - component: {fileID: 344539057}
+  - component: {fileID: 344539059}
   m_Layer: 5
   m_Name: GeneratorUpgradesPanel
   m_TagString: Untagged
@@ -547,6 +601,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!114 &344539059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344539055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 3888711536053103210, guid: db24f4a61507bee4aa34033fe5d88c96, type: 3}
+  UpgradesScroll: {fileID: 1330956451}
+  UpgradesPanel: {fileID: 344539056}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1 &391407289
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +966,7 @@ GameObject:
   - component: {fileID: 456984446}
   - component: {fileID: 456984448}
   - component: {fileID: 456984447}
+  - component: {fileID: 456984449}
   m_Layer: 5
   m_Name: ProductionUpgradesPanel
   m_TagString: Untagged
@@ -957,6 +1033,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!114 &456984449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456984445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 7796468793850799364, guid: 5e22967191212704c935a6355e61c73c, type: 3}
+  UpgradesScroll: {fileID: 1341025873}
+  UpgradesPanel: {fileID: 456984446}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,6 +1266,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532212583}
   m_CullTransparentMesh: 1
+--- !u!1 &538062965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 538062966}
+  - component: {fileID: 538062967}
+  m_Layer: 0
+  m_Name: GeneratorUpgradeHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &538062966
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538062965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364152175}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &538062967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538062965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 1179859862342171012, guid: db24f4a61507bee4aa34033fe5d88c96, type: 3}
+  UpgradesScroll: {fileID: 1330956451}
+  UpgradesPanel: {fileID: 344539056}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1 &557865056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,10 +1365,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Navigation
   ClickUpgradeSelected: {fileID: 2102705849}
   ProductionUpgradesSelected: {fileID: 1463422734}
-  GeneratorUpgradesSelected: {fileID: 0}
+  GeneratorUpgradesSelected: {fileID: 532212583}
   ClickUpgradeTitleText: {fileID: 822966187}
   ProductionUpgradeTitleText: {fileID: 1960603941}
-  GeneratorUpgradesTitleText: {fileID: 0}
+  GeneratorUpgradesTitleText: {fileID: 1227419421}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,7 +1650,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -167, y: -49}
+  m_AnchoredPosition: {x: -376, y: -49}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &801163006
@@ -1855,7 +2005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 54, y: 256}
+  m_AnchoredPosition: {x: -153, y: 256}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906495521
@@ -2472,9 +2622,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
   upgradeHandlers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 135009899}
+  - {fileID: 1442820320}
+  - {fileID: 538062967}
 --- !u!4 &1364152175
 Transform:
   m_ObjectHideFlags: 0
@@ -2487,7 +2637,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 135009898}
+  - {fileID: 1442820319}
+  - {fileID: 538062966}
   m_Father: {fileID: 758325254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367551671
@@ -2548,18 +2701,63 @@ MonoBehaviour:
       exponent: 0
     - mantissa: 0
       exponent: 0
-    generatorUpgradeLevel:
-    - mantissa: 0
-      exponent: 0
-    - mantissa: 0
-      exponent: 0
-    - mantissa: 0
-      exponent: 0
-    - mantissa: 0
-      exponent: 0
+    generatorUpgradeLevel: 00000000000000000000000000000000i
   BeanText: {fileID: 801163006}
   BeansPerSecondText: {fileID: 906495521}
   BeansPowerClickText: {fileID: 415432193}
+--- !u!1 &1442820318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1442820319}
+  - component: {fileID: 1442820320}
+  m_Layer: 0
+  m_Name: ProductionUpgradeHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1442820319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442820318}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364152175}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1442820320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442820318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 7796468793850799364, guid: 5e22967191212704c935a6355e61c73c, type: 3}
+  UpgradesScroll: {fileID: 1341025873}
+  UpgradesPanel: {fileID: 456984446}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1 &1463422734
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,6 +3470,7 @@ GameObject:
   - component: {fileID: 2114596597}
   - component: {fileID: 2114596599}
   - component: {fileID: 2114596598}
+  - component: {fileID: 2114596600}
   m_Layer: 5
   m_Name: ClickUpgradesPanel
   m_TagString: Untagged
@@ -3338,6 +3537,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 0
   m_VerticalFit: 1
+--- !u!114 &2114596600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114596596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089d9a41f740b4e408c8adeb213b79ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeHandler
+  Upgrades: []
+  UpgradePrefab: {fileID: 2214023167589727736, guid: 4c49dc0d0cf179044b028683167bc6f2, type: 3}
+  UpgradesScroll: {fileID: 420080827}
+  UpgradesPanel: {fileID: 2114596597}
+  UpgradeNames: []
+  UpgradeBaseCost: []
+  UpgradeCostMult: []
+  UpgradeBasePower: []
+  UpgradesUnlock: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

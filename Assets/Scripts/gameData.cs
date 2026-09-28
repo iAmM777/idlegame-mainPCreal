@@ -10,7 +10,8 @@ public class gameData
 
     public List<int> clickUpgradeLevel;
     public List<BigDouble> productionUpgradeLevel;
-    public List<BigDouble> generatorUpgradeLevel;
+    public List<BigDouble> productionUpgradeGenerated;
+    public List<int> generatorUpgradeLevel;
 
 
     public gameData() 
@@ -18,6 +19,7 @@ public class gameData
         Beans = 0;
         clickUpgradeLevel = new int[4].ToList();
         productionUpgradeLevel = new BigDouble[4].ToList();
-        generatorUpgradeLevel = new BigDouble[4].ToList();
+        productionUpgradeGenerated = new BigDouble[4].ToList();
+        generatorUpgradeLevel = new int[4].ToList();
     } 
 }
