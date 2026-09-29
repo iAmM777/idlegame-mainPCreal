@@ -47,10 +47,10 @@ public class UpgradeManager : MonoBehaviour
         };
 
         // Click Upgrades
-        upgradeHandlers[0].UpgradeBaseCost = new BigDouble[] { 10, 50, 100, 0 };
+        upgradeHandlers[0].UpgradeBaseCost = new BigDouble[] { 10, 50, 100, 500 };
         upgradeHandlers[0].UpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55, 1.75 };
         upgradeHandlers[0].UpgradeBasePower = new BigDouble[] { 1, 5, 10, 25 };
-        upgradeHandlers[0].UpgradesUnlock = new BigDouble[] { 0, 25, 50, 0 }; //half of clickUpgradeBaseCost
+        upgradeHandlers[0].UpgradesUnlock = new BigDouble[] { 5, 25, 50, 250 }; //half of clickUpgradeBaseCost
 
         //production upgrades
         upgradeHandlers[1].UpgradeBaseCost = new BigDouble[] { 25, 50, 100, 250 };
